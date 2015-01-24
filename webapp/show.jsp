@@ -23,7 +23,7 @@
 	    </div>
 	    <div class="post-content">
 	        <div class="about">내용 : </div>
-	        ${question.contents}
+	        ${nf:hbr(question.contents)}
 	    </div>
 	</div>    
 
