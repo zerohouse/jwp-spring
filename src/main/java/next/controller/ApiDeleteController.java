@@ -14,7 +14,7 @@ import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
 import core.utils.ServletRequestUtils;
 
-public class DeleteController extends AbstractController {
+public class ApiDeleteController extends AbstractController {
 	private QuestionDao questionDao = QuestionDao.getInstance();
 	private AnswerDao answerDao = AnswerDao.getInstance();
 
