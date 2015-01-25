@@ -14,7 +14,7 @@ import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
 import core.utils.ServletRequestUtils;
 
-public class DeleteAnswerController extends AbstractController {
+public class DeleteController extends AbstractController {
 	private QuestionDao questionDao = QuestionDao.getInstance();
 	private AnswerDao answerDao = AnswerDao.getInstance();
 
@@ -23,14 +23,19 @@ public class DeleteAnswerController extends AbstractController {
 		long questionId = ServletRequestUtils.getRequiredLongParameter(request, "questionId");
 		List<Answer> answers = answerDao.findAllByQuestionId(questionId);
 		
+		Question question = questionDao.findById(questionId);
 		ModelAndView mav = jsonView();
+		if (question == null) {
+			mav.addObject("result", Result.fail("존재하지 않는 질문입니다."));
+			return mav;
+		}
+		
 		if (answers.isEmpty()) {
 			questionDao.delete(questionId);
 			mav.addObject("result", Result.ok());
 			return mav;
 		}
 		
-		Question question = questionDao.findById(questionId);
 		boolean canDelete = true;
 		for (Answer answer : answers) {
 			String writer = question.getWriter();
