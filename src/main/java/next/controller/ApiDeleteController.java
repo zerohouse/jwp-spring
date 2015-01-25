@@ -21,7 +21,6 @@ public class ApiDeleteController extends AbstractController {
 	@Override
 	public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		long questionId = ServletRequestUtils.getRequiredLongParameter(request, "questionId");
-		List<Answer> answers = answerDao.findAllByQuestionId(questionId);
 		
 		Question question = questionDao.findById(questionId);
 		ModelAndView mav = jsonView();
@@ -30,6 +29,7 @@ public class ApiDeleteController extends AbstractController {
 			return mav;
 		}
 		
+		List<Answer> answers = answerDao.findAllByQuestionId(questionId);
 		if (answers.isEmpty()) {
 			questionDao.delete(questionId);
 			mav.addObject("result", Result.ok());
