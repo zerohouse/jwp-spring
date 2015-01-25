@@ -41,6 +41,7 @@ public class DeleteController extends AbstractController {
 			String writer = question.getWriter();
 			if (!writer.equals(answer.getWriter())) {
 				canDelete = false;
+				break;
 			}
 		}
 		
