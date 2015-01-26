@@ -17,10 +17,15 @@ public class FrontController extends HttpServlet {
 	private static final Logger logger = LoggerFactory.getLogger(FrontController.class);
 	
 	private RequestMapping rm;
+	
+	public FrontController() {
+		logger.debug("created FrontController");
+	}
 
 	@Override
 	public void init() throws ServletException {
 		rm = (RequestMapping)getServletContext().getAttribute(ServletContextLoader.DEFAULT_REQUEST_MAPPING);
+		logger.debug("RequestMapping : {}", rm);
 	}
 
 	@Override
