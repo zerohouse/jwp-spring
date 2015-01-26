@@ -11,7 +11,7 @@ public interface QuestionDao {
 	List<Question> findAll();
 
 	Question findById(long questionId);
-
+	
 	void updateCommentCount(long questionId);
 
 	void delete(long questionId);

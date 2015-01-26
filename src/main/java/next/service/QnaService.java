@@ -9,20 +9,15 @@ import next.dao.QuestionDao;
 import next.model.Answer;
 import next.model.Question;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class QnaService {
-	private static final Logger logger = LoggerFactory.getLogger(QnaService.class);
-	
 	private QuestionDao questionDao;
 	private AnswerDao answerDao;
-	
+
 	public QnaService(QuestionDao questionDao, AnswerDao answerDao) {
 		this.questionDao = questionDao;
 		this.answerDao = answerDao;
 	}
-	
+
 	public void delete(final long questionId) throws ResourceNotFoundException, ExistedAnotherUserException {
 		Question question = questionDao.findById(questionId);
 		if (question == null) {
@@ -30,18 +25,10 @@ public class QnaService {
 		}
 
 		List<Answer> answers = answerDao.findAllByQuestionId(questionId);
-		if (answers.isEmpty()) {
-			questionDao.delete(questionId);
-			return;
-		}
-
+		question.setAnswers(answers);
 		
-		for (Answer answer : answers) {
-			String writer = question.getWriter();
-			logger.debug("question writer : {}, answer writer : {}", writer, answer.getWriter());
-			if (!writer.equals(answer.getWriter())) {
-				throw new ExistedAnotherUserException("다른 사용자가 추가한 댓글이 존재해 삭제할 수 없습니다.");
-			}
+		if (!question.canDelete()) {
+			throw new ExistedAnotherUserException("다른 사용자가 추가한 댓글이 존재해 삭제할 수 없습니다.");
 		}
 
 		answerDao.delete(questionId);
