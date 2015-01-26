@@ -36,7 +36,6 @@ public class QnaService {
 		}
 
 		
-		logger.debug("count of answer : {}", answers.size());
 		for (Answer answer : answers) {
 			String writer = question.getWriter();
 			logger.debug("question writer : {}, answer writer : {}", writer, answer.getWriter());
