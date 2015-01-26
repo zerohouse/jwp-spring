@@ -28,4 +28,11 @@ public class MockAnswerDao implements AnswerDao {
 		return answers;
 	}
 
+	@Override
+	public void delete(long questionId) {
+		List<Answer> answersByQuestionId = findAllByQuestionId(questionId);
+		for (Answer answer : answersByQuestionId) {
+			answers.remove(answer.getAnswerId());
+		}
+	}
 }

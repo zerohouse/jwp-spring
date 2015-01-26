@@ -10,4 +10,6 @@ public interface AnswerDao {
 
 	List<Answer> findAllByQuestionId(long questionId);
 
+	void delete(long questionId);
+
 }

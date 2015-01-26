@@ -54,4 +54,10 @@ public class JdbcAnswerDao implements AnswerDao {
 		
 		return jdbcTemplate.query(sql, rm, questionId);
 	}
+
+	@Override
+	public void delete(long questionId) {
+		String sql = "DELETE FROM QUESTIONS WHERE questionId = ?";
+		jdbcTemplate.update(sql, questionId);
+	}
 }
