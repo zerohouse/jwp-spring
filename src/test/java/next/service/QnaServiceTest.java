@@ -10,6 +10,7 @@ import java.util.List;
 
 import next.ExistedAnotherUserException;
 import next.ResourceNotFoundException;
+import next.dao.MockAnswerDao;
 import next.dao.MockQuestionDao;
 import next.model.Answer;
 import next.model.Question;
@@ -19,13 +20,15 @@ import org.junit.Test;
 
 public class QnaServiceTest {
 	private MockQuestionDao questionDao;
+	private MockAnswerDao answerDao;
 
 	private QnaService qnaService;
 
 	@Before
 	public void setup() {
 		questionDao = new MockQuestionDao();
-		qnaService = new QnaService(questionDao);
+		answerDao = new MockAnswerDao();
+		qnaService = new QnaService(questionDao, answerDao);
 	}
 
 	@Test(expected = ResourceNotFoundException.class)

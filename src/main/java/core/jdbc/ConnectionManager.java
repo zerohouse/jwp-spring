@@ -1,8 +1,5 @@
 package core.jdbc;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
@@ -20,13 +17,5 @@ public class ConnectionManager {
 		ds.setUsername(DB_USERNAME);
 		ds.setPassword(DB_PW);
 		return ds;
-	}
-	
-	public static Connection getConnection() {
-		try {
-			return getDataSource().getConnection();
-		} catch (SQLException e) {
-			throw new IllegalStateException(e);
-		}
 	}
 }

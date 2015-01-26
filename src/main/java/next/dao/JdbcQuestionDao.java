@@ -11,15 +11,12 @@ import core.jdbc.JdbcTemplate;
 import core.jdbc.RowMapper;
 
 public class JdbcQuestionDao implements QuestionDao {
-	private static QuestionDao questionDao = new JdbcQuestionDao();
-	private JdbcTemplate jdbcTemplate = JdbcTemplate.getInstance();
-	private AnswerDao answerDao = JdbcAnswerDao.getInstance();
+	private JdbcTemplate jdbcTemplate;
+	private AnswerDao answerDao;
 	
-	private JdbcQuestionDao() {
-	}
-	
-	public static QuestionDao getInstance() {
-		return questionDao;
+	public JdbcQuestionDao(JdbcTemplate jdbcTemplate, AnswerDao answerDao) {
+		this.jdbcTemplate = jdbcTemplate;
+		this.answerDao = answerDao;
 	}
 	
 	/* (non-Javadoc)

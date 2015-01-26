@@ -1,15 +1,21 @@
 package next.service;
 
+import java.util.List;
+
 import next.ExistedAnotherUserException;
 import next.ResourceNotFoundException;
+import next.dao.AnswerDao;
 import next.dao.QuestionDao;
+import next.model.Answer;
 import next.model.Question;
 
 public class QnaService {
 	private QuestionDao questionDao;
+	private AnswerDao answerDao;
 
-	public QnaService(QuestionDao questionDao) {
+	public QnaService(QuestionDao questionDao, AnswerDao answerDao) {
 		this.questionDao = questionDao;
+		this.answerDao = answerDao;
 	}
 
 	public void delete(final long questionId) throws ResourceNotFoundException, ExistedAnotherUserException {
@@ -20,5 +26,13 @@ public class QnaService {
 		}
 
 		questionDao.delete(questionId);
+	}
+	
+	public Question findById(long questionId) {
+		return questionDao.findById(questionId);
+	}
+
+	public List<Answer> findAnswersByQuestionId(long questionId) {
+		return answerDao.findAllByQuestionId(questionId);
 	}
 }
