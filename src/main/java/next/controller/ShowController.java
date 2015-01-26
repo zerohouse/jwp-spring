@@ -5,8 +5,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import next.dao.JdbcAnswerDao;
 import next.dao.AnswerDao;
 import next.dao.QuestionDao;
+import next.dao.JdbcQuestionDao;
 import next.model.Answer;
 import next.model.Question;
 
@@ -20,8 +22,8 @@ import core.utils.ServletRequestUtils;
 public class ShowController extends AbstractController {
 	private static final Logger logger = LoggerFactory.getLogger(ShowController.class);
 	
-	private QuestionDao questionDao = QuestionDao.getInstance();
-	private AnswerDao answerDao = AnswerDao.getInstance();
+	private QuestionDao questionDao = JdbcQuestionDao.getInstance();
+	private AnswerDao answerDao = JdbcAnswerDao.getInstance();
 	private Question question;
 	private List<Answer> answers;
 	
