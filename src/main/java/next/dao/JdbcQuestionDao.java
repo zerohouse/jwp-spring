@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
+import next.ResourceNotFoundException;
 import next.model.Question;
 import core.jdbc.JdbcTemplate;
 import core.jdbc.RowMapper;
@@ -12,6 +13,7 @@ import core.jdbc.RowMapper;
 public class JdbcQuestionDao implements QuestionDao {
 	private static QuestionDao questionDao = new JdbcQuestionDao();
 	private JdbcTemplate jdbcTemplate = JdbcTemplate.getInstance();
+	private AnswerDao answerDao = JdbcAnswerDao.getInstance();
 	
 	private JdbcQuestionDao() {
 	}
@@ -93,7 +95,19 @@ public class JdbcQuestionDao implements QuestionDao {
 	 */
 	@Override
 	public void delete(long questionId) {
+		answerDao.delete(questionId);
+		
 		String sql = "DELETE FROM QUESTIONS WHERE questionId = ?";
 		jdbcTemplate.update(sql, questionId);
+	}
+
+	@Override
+	public Question findWithAnswersById(long questionId) throws ResourceNotFoundException {
+		Question question = findById(questionId);
+		if (question == null) {
+			throw new ResourceNotFoundException("존재하지 않는 질문입니다.");
+		}
+		question.setAnswers(answerDao.findAllByQuestionId(questionId));
+		return question;
 	}
 }

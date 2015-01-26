@@ -73,11 +73,7 @@ public class Question {
 	}
 
 	public boolean canDelete() {
-		if (answers == null) {
-			return true;
-		}
-		
-		if (answers.isEmpty()) {
+		if (answers == null || answers.isEmpty()) {
 			return true;
 		}
 		
