@@ -57,9 +57,8 @@
 		e.preventDefault();
 
 		var answerForm = e.currentTarget.form;
-		var url = "/api/addanswer.next";
-		var params = "questionId=" + answerForm[0].value + "&writer="
-				+ answerForm[1].value + "&contents=" + answerForm[2].value;
+		var url = "/api/questions/" + answerForm[0].value + "/answers";
+		var params = "writer=" + answerForm[1].value + "&contents=" + answerForm[2].value;
 
 		var request = new XMLHttpRequest();
 		request.open("POST", url, true);

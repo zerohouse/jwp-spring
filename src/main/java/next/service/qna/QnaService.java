@@ -32,4 +32,10 @@ public class QnaService {
 	public void save(Question question) {
 		questionDao.insert(question);
 	}
+
+	public void addAnswer(long questionId, Answer answer) {
+		answer.setQuestionId(questionId);
+		answerDao.insert(answer);
+		questionDao.updateCommentCount(questionId);
+	}
 }

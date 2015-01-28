@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,10 +47,10 @@ public class QuestionController {
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public String save(@Valid Question question, BindingResult bindingResult) {
 		logger.debug("Question : {}", question);
-		if (bindingResult.hasErrors()) {
-			List<ObjectError> errors = bindingResult.getAllErrors();
-			for (ObjectError error : errors) {
-				logger.debug("error : {}", error);
+		if (bindingResult.hasFieldErrors()) {
+			List<FieldError> errors = bindingResult.getFieldErrors();
+			for (FieldError error : errors) {
+				logger.debug("field : {}, error code : {}", error.getField(), error.getCode());
 			}
 			return "form";
 		}

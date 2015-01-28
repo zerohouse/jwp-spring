@@ -2,35 +2,35 @@ package core.web;
 
 public class Result {
 	private boolean status;
-	private String message;
+	private String errorMessage;
 
 	private Result(boolean status) {
 		this(status, "");
 	}
 	
-	private Result(boolean status, String message) {
+	private Result(boolean status, String errorMessage) {
 		this.status = status;
-		this.message = message;
+		this.errorMessage = errorMessage;
 	}
 
 	public static Result ok() {
 		return new Result(true);
 	}
 
-	public static Result fail(String message) {
-		return new Result(false, message);
+	public static Result fail(String errorMessage) {
+		return new Result(false, errorMessage);
 	}
 
 	public boolean isStatus() {
 		return status;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 
 	@Override
 	public String toString() {
-		return "Result [status=" + status + ", message=" + message + "]";
+		return "Result [status=" + status + ", errorMessage=" + errorMessage + "]";
 	}
 }
