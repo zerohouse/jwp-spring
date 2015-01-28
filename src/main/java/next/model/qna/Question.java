@@ -1,35 +1,43 @@
 package next.model.qna;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Question {
 	private long questionId;
-	
+
+	@Size(min = 2, max = 30)
 	private String writer;
-	
+
+	@Size(min = 2, max = 50)
 	private String title;
-	
+
+	@NotEmpty
 	private String contents;
-	
+
 	private Date createdDate;
-	
+
 	private int countOfComment;
 
 	private List<Answer> answers;
-	
+
+	public Question() {
+		this.createdDate = new Date();
+	}
+
 	public Question(String writer, String title, String contents) {
 		this(0, writer, title, contents, new Date(), 0);
-	}	
-	
-	public Question(long questionId, String writer, String title, String contents,
-			Date createdDate, int countOfComment) {
+	}
+
+	public Question(long questionId, String writer, String title, String contents, Date createdDate, int countOfComment) {
 		this(questionId, writer, title, contents, new Date(), countOfComment, null);
 	}
-	
-	private Question(long questionId, String writer, String title, String contents,
-			Date createdDate, int countOfComment, List<Answer> answers) {
+
+	private Question(long questionId, String writer, String title, String contents, Date createdDate, int countOfComment, List<Answer> answers) {
 		this.questionId = questionId;
 		this.writer = writer;
 		this.title = title;
@@ -42,23 +50,39 @@ public class Question {
 	public long getQuestionId() {
 		return questionId;
 	}
-	
+
+	public void setQuestionId(long questionId) {
+		this.questionId = questionId;
+	}
+
 	public String getWriter() {
 		return writer;
+	}
+
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
 
 	public String getTitle() {
 		return title;
 	}
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public String getContents() {
 		return contents;
+	}
+
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
 
 	public Date getCreatedDate() {
 		return createdDate;
 	}
-	
+
 	public long getTimeFromCreateDate() {
 		return this.createdDate.getTime();
 	}
@@ -66,21 +90,19 @@ public class Question {
 	public int getCountOfComment() {
 		return countOfComment;
 	}
-	
+
 	public List<Answer> getAnswers() {
 		return answers;
 	}
-	
+
 	public Question withAnswers(List<Answer> answers) {
 		return new Question(questionId, writer, title, contents, createdDate, countOfComment, answers);
 	}
 
 	@Override
 	public String toString() {
-		return "Question [questionId=" + questionId + ", writer=" + writer
-				+ ", title=" + title + ", contents=" + contents
-				+ ", createdDate=" + createdDate + ", countOfComment="
-				+ countOfComment + "]";
+		return "Question [questionId=" + questionId + ", writer=" + writer + ", title=" + title + ", contents=" + contents + ", createdDate="
+				+ createdDate + ", countOfComment=" + countOfComment + "]";
 	}
 
 	@Override

@@ -49,7 +49,7 @@ body {
     text-decoration: none;
 }
 
-#title {
+#header .title {
     background: #B8C569;
     padding: 20px 30px 30px 20px;
     margin: 20px 0;
@@ -75,17 +75,17 @@ body {
 	left: 60px;
 }
 
-#title h1 {
+.title h1 {
     font-size: 64px;
     margin: 0;
 }
 
-#title h1 a {
+.title h1 a {
     text-decoration: none;
     color: inherit;
 }
 
-#title h2 {
+.title h2 {
     font-size: 26px;
     margin: 0;
     font-weight: normal;
@@ -544,4 +544,8 @@ tr.odd {
 
 .hasError {
     background: pink;
+}
+
+.btn-delete {
+	text-align: right;
 }

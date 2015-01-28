@@ -13,6 +13,9 @@ public class Answer {
 
 	private long questionId;
 	
+	public Answer() {
+	}
+	
 	public Answer(String writer, String contents, long questionId) {
 		this(0, writer, contents, new Date(), questionId);
 	}

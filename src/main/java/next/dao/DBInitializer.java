@@ -1,6 +1,4 @@
-package next.dao.qna;
-
-import javax.servlet.ServletContextEvent;
+package next.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +11,7 @@ import core.jdbc.AbstractJdbcDaoSupport;
 public class DBInitializer extends AbstractJdbcDaoSupport {
 	private static final Logger logger = LoggerFactory.getLogger(DBInitializer.class);
 	
-	public void initialized(ServletContextEvent sce) {
+	public void initialized() {
 		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
 		populator.addScript(new ClassPathResource("jwp.sql"));
 		DatabasePopulatorUtils.execute(populator, getDataSource());

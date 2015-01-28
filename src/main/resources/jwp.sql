@@ -18,7 +18,10 @@ CREATE TABLE ANSWERS (
 	contents			varchar(5000)		NOT NULL,
 	createdDate			timestamp			NOT NULL,
 	questionId			bigint				NOT NULL,				
-	PRIMARY KEY         (answerId)
+	PRIMARY KEY         (answerId),
+	FOREIGN KEY (questionId) 
+        REFERENCES QUESTIONS(questionId)
+        ON DELETE CASCADE	
 );
 
 INSERT INTO QUESTIONS (writer, title, contents, createdDate, countOfComment) VALUES

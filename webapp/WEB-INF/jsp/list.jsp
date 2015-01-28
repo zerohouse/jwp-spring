@@ -8,8 +8,8 @@
 
 <body>
     <div id="header">
-        <div id="title">
-            <h2><a href="/list.next">Java Web Programming 실습</a></h2>
+        <div class="title">
+            <h2><a href="/questions">Java Web Programming 실습</a></h2>
         </div>
     </div>
      
@@ -18,7 +18,7 @@
 	<c:forEach items="${questions}" var="each">
 	  <div class="post">
 	      <h2 class="post-title">
-	          <a href="/show.next?questionId=${each.questionId}">${each.title}</a>
+	          <a href="/questions/${each.questionId}">${each.title}</a>
 	      </h2>
 	      <div class="post-metadata">
 	          <span class="post-author">${each.writer}</span>
@@ -29,7 +29,7 @@
 	</c:forEach>
 	</div>
 
-  	<br /> <a href="/form.next">질문하기</a> 
+  	<br /> <a href="/questions/form">질문하기</a> 
     </div>
 </body>
 </html>
