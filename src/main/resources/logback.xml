@@ -8,8 +8,11 @@
 	</appender>
 	
 	<logger name="core" level="DEBUG" />
-	
 	<logger name="next" level="DEBUG" />
+	
+	<logger name="org.springframework" level="INFO" />
+	<logger name="org.springframework.web.bind.annotation.support.HandlerMethodInvoker" level="INFO" />
+	<logger name="org.springframework.web.servlet.DispatcherServlet" level="INFO" />	
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />

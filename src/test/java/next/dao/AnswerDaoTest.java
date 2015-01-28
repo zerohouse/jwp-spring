@@ -6,27 +6,22 @@ import java.util.List;
 
 import next.model.Answer;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import core.jdbc.ConnectionManager;
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:/applicationContext.xml")
 public class AnswerDaoTest {
-	@Before
-	public void setup() {
-		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		populator.addScript(new ClassPathResource("jwp.sql"));
-		DatabasePopulatorUtils.execute(populator, ConnectionManager.getDataSource());
-	}
-
+	@Autowired
+	private AnswerDao dut;
+	
 	@Test
 	public void crud() throws Exception {
 		long questionId = 1L;
 		Answer expected = new Answer("javajigi", "answer contents", questionId);
-		AnswerDao dut = new AnswerDao();
 		dut.insert(expected);
 		
 		List<Answer> answers = dut.findAllByQuestionId(questionId);

@@ -6,15 +6,17 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import next.model.Question;
-import core.jdbc.JdbcTemplate;
-import core.jdbc.RowMapper;
 
-public class QuestionDao {
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
+import core.jdbc.AbstractJdbcDaoSupport;
+
+@Repository
+public class QuestionDao extends AbstractJdbcDaoSupport {
 	public void insert(Question question) {
-		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		String sql = "INSERT INTO QUESTIONS (writer, title, contents, createdDate, countOfComment) VALUES (?, ?, ?, ?, ?)";
-		jdbcTemplate.update(sql, 
+		getJdbcTemplate().update(sql, 
 				question.getWriter(), 
 				question.getTitle(), 
 				question.getContents(),
@@ -23,13 +25,12 @@ public class QuestionDao {
 	}
 	
 	public List<Question> findAll() {
-		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		String sql = "SELECT questionId, writer, title, createdDate, countOfComment FROM QUESTIONS "
 				+ "order by questionId desc";
 		
 		RowMapper<Question> rm = new RowMapper<Question>() {
 			@Override
-			public Question mapRow(ResultSet rs) throws SQLException {
+			public Question mapRow(ResultSet rs, int rowNum) throws SQLException {
 				return new Question(rs.getLong("questionId"),
 						rs.getString("writer"), rs.getString("title"), null,
 						rs.getTimestamp("createdDate"),
@@ -38,17 +39,16 @@ public class QuestionDao {
 			
 		};
 		
-		return jdbcTemplate.query(sql, rm);
+		return getJdbcTemplate().query(sql, rm);
 	}
 
 	public Question findById(long questionId) {
-		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		String sql = "SELECT questionId, writer, title, contents, createdDate, countOfComment FROM QUESTIONS "
 				+ "WHERE questionId = ?";
 		
 		RowMapper<Question> rm = new RowMapper<Question>() {
 			@Override
-			public Question mapRow(ResultSet rs) throws SQLException {
+			public Question mapRow(ResultSet rs, int rowNum) throws SQLException {
 				return new Question(rs.getLong("questionId"),
 						rs.getString("writer"), rs.getString("title"),
 						rs.getString("contents"),
@@ -58,6 +58,6 @@ public class QuestionDao {
 			
 		};
 		
-		return jdbcTemplate.queryForObject(sql, rm, questionId);
+		return getJdbcTemplate().queryForObject(sql, rm, questionId);
 	}
 }
