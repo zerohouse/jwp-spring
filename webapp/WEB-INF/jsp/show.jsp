@@ -28,7 +28,7 @@
 	</div>    
 
 	<div class="buttons">
-		<a href="/questions/${question.questionId}/form">수정</a>&nbsp;<a href="/questions/${question.questionId}">삭제</a>&nbsp;<a href="/questions">목록으로</a>
+		<a href="/questions/${question.questionId}/form">수정</a>&nbsp;<a href="/questions/${question.questionId}/delete">삭제</a>&nbsp;<a href="/questions">목록으로</a>
 	</div>
 
 	<h3>답변</h3>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import next.ExistedAnotherUserException;
 import next.dao.qna.AnswerDao;
 import next.dao.qna.QuestionDao;
 import next.model.qna.Answer;
@@ -31,6 +32,16 @@ public class QnaService {
 
 	public void save(Question question) {
 		questionDao.insert(question);
+	}
+	
+	public void delete(final long questionId) throws ExistedAnotherUserException {
+		Question question = findById(questionId);
+		
+		if (!question.canDelete()) {
+			throw new ExistedAnotherUserException("다른 사용자가 추가한 댓글이 존재해 삭제할 수 없습니다.");
+		}
+
+		questionDao.delete(questionId);
 	}
 
 	public void addAnswer(long questionId, Answer answer) {

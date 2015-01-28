@@ -65,4 +65,9 @@ public class QuestionDao extends AbstractJdbcDaoSupport {
 		String sql = "UPDATE QUESTIONS set countOfComment = countOfComment + 1 WHERE questionId = ?";
 		getJdbcTemplate().update(sql, questionId);
 	}
+	
+	public void delete(long questionId) {
+		String sql = "DELETE FROM QUESTIONS WHERE questionId = ?";
+		getJdbcTemplate().update(sql, questionId);
+	}
 }

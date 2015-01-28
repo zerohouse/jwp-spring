@@ -37,4 +37,9 @@ public class AnswerDao extends AbstractJdbcDaoSupport {
 
 		return getJdbcTemplate().query(sql, rm, questionId);
 	}
+	
+	public void delete(long questionId) {
+		String sql = "DELETE FROM QUESTIONS WHERE questionId = ?";
+		getJdbcTemplate().update(sql, questionId);
+	}
 }

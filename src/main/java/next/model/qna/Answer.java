@@ -75,6 +75,14 @@ public class Answer {
 		this.questionId = questionId;
 	}
 	
+	public boolean isSameUser(String writer) {
+		if (this.writer == null) {
+			return false;
+		}
+		
+		return this.writer.equals(writer);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
