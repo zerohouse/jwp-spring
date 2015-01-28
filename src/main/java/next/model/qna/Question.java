@@ -1,6 +1,8 @@
-package next.model;
+package next.model.qna;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 public class Question {
 	private long questionId;
@@ -14,6 +16,8 @@ public class Question {
 	private Date createdDate;
 	
 	private int countOfComment;
+
+	private List<Answer> answers;
 	
 	public Question(String writer, String title, String contents) {
 		this(0, writer, title, contents, new Date(), 0);
@@ -21,12 +25,18 @@ public class Question {
 	
 	public Question(long questionId, String writer, String title, String contents,
 			Date createdDate, int countOfComment) {
+		this(questionId, writer, title, contents, new Date(), countOfComment, null);
+	}
+	
+	private Question(long questionId, String writer, String title, String contents,
+			Date createdDate, int countOfComment, List<Answer> answers) {
 		this.questionId = questionId;
 		this.writer = writer;
 		this.title = title;
 		this.contents = contents;
 		this.createdDate = createdDate;
 		this.countOfComment = countOfComment;
+		this.answers = answers;
 	}
 
 	public long getQuestionId() {
@@ -55,6 +65,14 @@ public class Question {
 
 	public int getCountOfComment() {
 		return countOfComment;
+	}
+	
+	public List<Answer> getAnswers() {
+		return answers;
+	}
+	
+	public Question withAnswers(List<Answer> answers) {
+		return new Question(questionId, writer, title, contents, createdDate, countOfComment, answers);
 	}
 
 	@Override

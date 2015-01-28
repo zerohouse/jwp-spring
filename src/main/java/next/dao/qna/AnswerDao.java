@@ -1,11 +1,11 @@
-package next.dao;
+package next.dao.qna;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
-import next.model.Answer;
+import next.model.qna.Answer;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;

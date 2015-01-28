@@ -1,11 +1,11 @@
-package next.dao;
+package next.dao.qna;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
-import next.model.Question;
+import next.model.qna.Question;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -59,5 +59,10 @@ public class QuestionDao extends AbstractJdbcDaoSupport {
 		};
 		
 		return getJdbcTemplate().queryForObject(sql, rm, questionId);
+	}
+	
+	public void updateCommentCount(long questionId) {
+		String sql = "UPDATE QUESTIONS set countOfComment = countOfComment + 1 WHERE questionId = ?";
+		getJdbcTemplate().update(sql, questionId);
 	}
 }

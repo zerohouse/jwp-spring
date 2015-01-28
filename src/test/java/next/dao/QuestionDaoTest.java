@@ -4,7 +4,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import next.model.Question;
+import next.dao.qna.QuestionDao;
+import next.model.qna.Question;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

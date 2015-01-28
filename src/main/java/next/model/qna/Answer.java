@@ -1,4 +1,4 @@
-package next.model;
+package next.model.qna;
 
 import java.util.Date;
 

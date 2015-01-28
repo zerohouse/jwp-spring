@@ -1,4 +1,4 @@
-package next.dao;
+package next.dao.qna;
 
 import javax.servlet.ServletContextEvent;
 
