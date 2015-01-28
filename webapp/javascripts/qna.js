@@ -15,40 +15,23 @@
 			if (e.target.nodeName !== 'A') {
 				return;
 			}
-			var ids = e.target.id.split('_');
-			var url = "/api/answer.next";
-			var params = "questionId=" + ids[0] + "&answerId="
-					+ ids[1];
+			
+			var ids = e.target.getAttribute("data-ids").split('_');
+			var url = "/api/questions/" + ids[0] + "/answers/" + ids[1];
 	
 			var request = new XMLHttpRequest();
-			request.open("POST", url, true);
-			request.setRequestHeader("Content-type",
-					"application/x-www-form-urlencoded");
+			request.open("DELETE", url, true);
+			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	
 			request.onreadystatechange = function() {
 				if (request.readyState == 4 && request.status == 200) {
-					var responseObj = JSON.parse(request.responseText);
-					var newAnswers = responseObj.answers;
-					var answerIdMap = {};
-					for(var answer in newAnswers) {
-						answerIdMap[newAnswers[answer].answerId] = true;
-					}
-					var container = document.getElementById('comments');
-					document.querySelector('#comments #numAnswers').innerHTML = '댓글 수 : ' + newAnswers.length;
-					var currentAnswers = document.querySelectorAll('#comments .comment');
-					for(var answer in currentAnswers) {
-						if(!currentAnswers[answer].id) {
-							continue;
-						}
-						var id = currentAnswers[answer].id.split("_")[1];
-						console.log('currentId: ' + id);
-						if(!answerIdMap[id]) {
-							container.removeChild(currentAnswers[answer]);
-						}
+					var result = JSON.parse(request.responseText);
+					if (result.status) {
+						location.reload(true);
 					}
 				}
 			}
-			request.send(params);
+			request.send();
 		});
 
 	}

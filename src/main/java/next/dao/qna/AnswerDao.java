@@ -38,8 +38,13 @@ public class AnswerDao extends AbstractJdbcDaoSupport {
 		return getJdbcTemplate().query(sql, rm, questionId);
 	}
 	
-	public void delete(long questionId) {
-		String sql = "DELETE FROM QUESTIONS WHERE questionId = ?";
+	public void deleteAllByQuestionId(long questionId) {
+		String sql = "DELETE FROM ANSWERS WHERE questionId = ?";
 		getJdbcTemplate().update(sql, questionId);
+	}
+
+	public void delete(long answerId) {
+		String sql = "DELETE FROM ANSWERS WHERE answerId = ?";
+		getJdbcTemplate().update(sql, answerId);
 	}
 }

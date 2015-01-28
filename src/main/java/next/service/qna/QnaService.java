@@ -47,6 +47,11 @@ public class QnaService {
 	public void addAnswer(long questionId, Answer answer) {
 		answer.setQuestionId(questionId);
 		answerDao.insert(answer);
-		questionDao.updateCommentCount(questionId);
+		questionDao.increaseCommentCount(questionId);
+	}
+
+	public void deleteAnswer(long questionId, long answerId) {
+		answerDao.delete(answerId);
+		questionDao.decreaseCommentCount(questionId);
 	}
 }

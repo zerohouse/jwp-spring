@@ -7,6 +7,8 @@ import java.util.List;
 
 import next.model.qna.Question;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,8 @@ import core.jdbc.AbstractJdbcDaoSupport;
 
 @Repository
 public class QuestionDao extends AbstractJdbcDaoSupport {
+	private static final Logger logger = LoggerFactory.getLogger(QuestionDao.class);
+	
 	public void insert(Question question) {
 		String sql = "INSERT INTO QUESTIONS (writer, title, contents, createdDate, countOfComment) VALUES (?, ?, ?, ?, ?)";
 		getJdbcTemplate().update(sql, 
@@ -61,8 +65,17 @@ public class QuestionDao extends AbstractJdbcDaoSupport {
 		return getJdbcTemplate().queryForObject(sql, rm, questionId);
 	}
 	
-	public void updateCommentCount(long questionId) {
-		String sql = "UPDATE QUESTIONS set countOfComment = countOfComment + 1 WHERE questionId = ?";
+	public void increaseCommentCount(long questionId) {
+		updateCommentCount(questionId, "+ 1");
+	}
+	
+	public void decreaseCommentCount(long questionId) {
+		updateCommentCount(questionId, "- 1");
+	}
+	
+	public void updateCommentCount(long questionId, String value) {
+		String sql = String.format("UPDATE QUESTIONS set countOfComment = countOfComment %s WHERE questionId = ?", value);
+		logger.debug("sql : {}", sql);
 		getJdbcTemplate().update(sql, questionId);
 	}
 	

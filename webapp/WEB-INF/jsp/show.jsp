@@ -53,7 +53,7 @@
 	<div class="comments" id="comments">
 	    <h3 id="numAnswers">댓글 수 : ${question.countOfComment}</h3>
     	<c:forEach items="${question.answers}" var="each">
-        <div class="comment">
+        <div class="comment id_${question.questionId}_${each.answerId}">
             <div class="comment-metadata">
                 <span class="comment-author">by ${each.writer},</span>
                 <span class="comment-date">
@@ -65,7 +65,7 @@
                 ${nf:hbr(each.contents)}
             </div>
             <div class="btn-delete">
-            	<a href="#">삭제</a>
+            	<a href="#" data-ids="${question.questionId}_${each.answerId}">삭제</a>
             </div>
         </div>		    	
     	</c:forEach>    

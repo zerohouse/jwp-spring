@@ -47,6 +47,13 @@ public class AnswerController {
 		return Result.ok();
 	}
 	
+	@RequestMapping(value="/{answerId}", method=RequestMethod.DELETE)
+	public @ResponseBody Result delete(@PathVariable long questionId, @PathVariable long answerId) {
+		logger.debug("questionId : {}, answerId : {}", questionId, answerId);
+		qnaService.deleteAnswer(questionId, answerId);
+		return Result.ok();
+	}
+	
 	private String getMessage(FieldError error) {
 		String key = error.getCode() + ".answer." + error.getField();
 		return msa.getMessage(key);

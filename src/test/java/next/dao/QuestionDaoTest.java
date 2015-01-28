@@ -1,6 +1,7 @@
 package next.dao;
 
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -26,5 +27,19 @@ public class QuestionDaoTest {
 
 		List<Question> questions = dut.findAll();
 		assertTrue(questions.size() > 0);
+	}
+	
+	@Test
+	public void updateCommentCount() throws Exception {
+		Question expected = new Question("자바지기", "title", "contents");
+		dut.insert(expected);
+		
+		dut.increaseCommentCount(3);
+		Question question = dut.findById(3);
+		assertThat(question.getCountOfComment(), is(1));
+		
+		dut.decreaseCommentCount(3);
+		question = dut.findById(3);
+		assertThat(question.getCountOfComment(), is(0));
 	}
 }
