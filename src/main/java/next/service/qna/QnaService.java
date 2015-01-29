@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import next.ExistedAnotherUserException;
 import next.dao.qna.AnswerDao;
 import next.dao.qna.QuestionDao;
 import next.model.qna.Answer;

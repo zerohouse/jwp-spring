@@ -1,4 +1,4 @@
-package next;
+package next.service.qna;
 
 public class ExistedAnotherUserException extends Exception {
 	private static final long serialVersionUID = 1L;

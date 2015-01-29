@@ -29,19 +29,19 @@ public class QuestionController {
 	@RequestMapping("")
 	public String list(Model model) {
 		model.addAttribute("questions", qnaService.findAll());
-		return "list";
+		return "qna/list";
 	}
 	
 	@RequestMapping("/{id}")
 	public String show(@PathVariable long id, Model model) {
 		model.addAttribute("question", qnaService.findById(id));
-		return "show";
+		return "qna/show";
 	}
 	
 	@RequestMapping("/form")
 	public String form(Model model) {
 		model.addAttribute("question", new Question());
-		return "form";
+		return "qna/form";
 	}
 	
 	@RequestMapping(value="", method=RequestMethod.POST)
