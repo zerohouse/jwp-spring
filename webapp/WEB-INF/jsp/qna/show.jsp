@@ -6,11 +6,7 @@
 <%@ include file="/include/header.jspf"%>
 </head>
 <body>
-    <div id="header">
-        <div id="title">
-            <h2><a href="/questions">Java Web Programming 실습</a></h2>
-        </div>
-    </div>
+    <%@ include file="/include/top.jspf"%>
      
     <div id="main">
 	<div class="post">

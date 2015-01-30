@@ -7,11 +7,7 @@
 </head>
 
 <body>
-    <div id="header">
-        <div class="title">
-            <h2><a href="/questions">Java Web Programming 실습</a></h2>
-        </div>
-    </div>
+	<%@ include file="/include/top.jspf"%>
      
     <div id="main">
     <div class="older-posts">    

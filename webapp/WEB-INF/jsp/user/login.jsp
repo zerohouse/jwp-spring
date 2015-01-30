@@ -1,52 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	pageEncoding="UTF-8"%><%@ include file="/include/tags.jspf"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SLiPP :: 로그인</title>
 
-<%@ include file="../commons/_header.jspf"%>
+<%@ include file="/include/header.jspf"%>
 
 </head>
 <body>
-	<%@ include file="../commons/_top.jspf"%>
+	<%@ include file="/include/top.jspf"%>
 
-	<div class="container">
-		<div class="row">
-			<div class="span12">
-				<section id="typography">
-				<div class="page-header">
-					<h1>로그인</h1>
-				</div>
-				<form class="form-horizontal" action="/users/login" method="post">
-					<div class="control-group">
-						<label class="control-label" for="userId">사용자 아이디</label>
-						<div class="controls">
-							<input type="text" id="userId" name="userId" placeholder="">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="password">비밀번호</label>
-						<div class="controls">
-							<input type="password" id="password" name="password" placeholder="">
-						</div>
-					</div>
-					<c:if test="${not empty errorMessage}">
-					<div class="control-group">
-						<div class="controls">
-							<div class="error">${errorMessage}</div>							
-						</div>
-					</div>					
-					</c:if>
-					<div class="control-group">
-						<div class="controls">
-							<button type="submit" class="btn btn-primary">로그인</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
+	<div id="main">
+		<c:if test="${not empty errorMessage}">
+		<div class="error">${errorMessage}</div>
+		</c:if>
+		<form action="/users/login" method="post">
+			<table>
+				<tr>
+					<td width="150">사용자 아이디</td>
+					<td>
+						<input type="text" id="userId" name="userId" size="70">
+					</td>
+				</tr>			
+				<tr>
+					<td width="150">비밀번호</td>
+					<td>
+						<input type="password" id="password" name="password" size="70">
+					</td>
+				</tr>
+			</table>
+			<input type="submit" value="로그인" />			
+		</form>
 	</div>
 </body>
 </html>
