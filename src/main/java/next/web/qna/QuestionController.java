@@ -52,7 +52,7 @@ public class QuestionController {
 			for (FieldError error : errors) {
 				logger.debug("field : {}, error code : {}", error.getField(), error.getCode());
 			}
-			return "form";
+			return "qna/form";
 		}
 		qnaService.save(question);
 		return "redirect:/";

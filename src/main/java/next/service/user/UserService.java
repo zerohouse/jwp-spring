@@ -1,6 +1,10 @@
 package next.service.user;
 
-import java.sql.SQLException;
+import static next.model.user.UserAction.CREATE;
+import static next.model.user.UserAction.LOGIN_FAILED;
+import static next.model.user.UserAction.LOGIN_SUCCESS;
+import static next.model.user.UserAction.LOGIN_TRY;
+import static next.model.user.UserAction.UPDATE;
 
 import javax.annotation.Resource;
 
@@ -16,43 +20,38 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 	private static Logger log = LoggerFactory.getLogger(UserService.class);
-	private static final String CREATE_ACTION = "추가";
-	private static final String UPDATE_ACTION = "수정";
-	private static final String LOGIN_TRY = "로그인 시도";
-	private static final String LOGIN_SUCCESS = "로그인 성공";
-	private static final String LOGIN_FAILED = "로그인 실패";
-	
-	@Resource(name="userDao")
+
+	@Resource(name = "userDao")
 	private UserDao userDao;
-	
-	@Resource(name="auditService")
+
+	@Resource(name = "auditService")
 	private AuditService auditService;
-	
+
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
-	
-	public User join(User user) throws SQLException, ExistedUserException {
+
+	public User join(User user) throws ExistedUserException {
 		log.debug("User : {}", user);
-		auditService.log(new AuditObject(user.getUserId(), CREATE_ACTION));
-		
+
 		User existedUser = userDao.findByUserId(user.getUserId());
 		if (existedUser != null) {
 			throw new ExistedUserException(user.getUserId());
 		}
 
 		userDao.insert(user);
+		auditService.log(new AuditObject(user.getUserId(), CREATE));
 		return user;
 	}
 
-	public User login(String userId, String password) throws SQLException, PasswordMismatchException {
+	public User login(String userId, String password) throws PasswordMismatchException {
 		auditService.log(new AuditObject(userId, LOGIN_TRY));
 		User user = userDao.findByUserId(userId);
 		if (user == null) {
 			auditService.log(new AuditObject(userId, LOGIN_FAILED));
 			throw new PasswordMismatchException();
 		}
-		
+
 		if (!user.matchPassword(password)) {
 			auditService.log(new AuditObject(userId, LOGIN_FAILED));
 			throw new PasswordMismatchException();
@@ -62,17 +61,17 @@ public class UserService {
 		return user;
 	}
 
-	public User findByUserId(String userId) throws SQLException {
+	public User findByUserId(String userId) {
 		return userDao.findByUserId(userId);
 	}
 
-	public void update(String userId, User updateUser) throws SQLException, PasswordMismatchException {
-		User user = findByUserId(userId);
+	public void update(String userId, User updateUser) throws PasswordMismatchException {
+		User user = userDao.findByUserId(userId);
 		if (user == null) {
 			throw new NullPointerException(userId + " user doesn't existed.");
 		}
 		user.update(updateUser);
 		userDao.update(user);
-		auditService.log(new AuditObject(user.getUserId(), UPDATE_ACTION));
+		auditService.log(new AuditObject(user.getUserId(), UPDATE));
 	}
 }

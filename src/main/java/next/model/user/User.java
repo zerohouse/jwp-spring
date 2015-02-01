@@ -1,11 +1,22 @@
 package next.model.user;
 
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+
 import next.service.user.PasswordMismatchException;
 
 public class User {
+	@Size(min = 3, max = 12)
 	private String userId;
+	
+	@Size(min = 3, max = 12)
 	private String password;
+	
+	@Size(min = 2, max = 20)
 	private String name;
+	
+	@Email
 	private String email;
 	
 	public User() {

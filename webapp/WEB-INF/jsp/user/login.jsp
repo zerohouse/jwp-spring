@@ -7,7 +7,6 @@
 <title>SLiPP :: 로그인</title>
 
 <%@ include file="/include/header.jspf"%>
-
 </head>
 <body>
 	<%@ include file="/include/top.jspf"%>

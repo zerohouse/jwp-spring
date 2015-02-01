@@ -2,6 +2,8 @@ package next.model.audit;
 
 import java.util.Date;
 
+import next.model.user.UserAction;
+
 public class AuditObject {
 	private Long id;
 	private String who;
@@ -12,11 +14,11 @@ public class AuditObject {
 	public AuditObject() {
 	}
 
-	public AuditObject(String resource, String action) {
+	public AuditObject(String resource, UserAction action) {
 		initWho();
 		initWhen();
 		this.resource = resource;
-		this.action = action;
+		this.action = action.name();
 	}
 
 	private void initWho() {

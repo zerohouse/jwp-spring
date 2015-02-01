@@ -1,6 +1,7 @@
 package next.web.user;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import next.model.user.User;
 import next.service.user.PasswordMismatchException;
@@ -11,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -30,8 +31,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String join(User user) throws Exception {
+	public String join(@Valid User user, BindingResult bindingResult) throws Exception {
 		log.debug("user : {}", user);
+		if (bindingResult.hasFieldErrors()) {
+			return "user/form";
+		}
+		
 		userService.join(user);
 		return "redirect:/";
 	}
@@ -56,25 +61,5 @@ public class UserController {
 	public String logout(HttpSession session) throws Exception {
 		session.removeAttribute("loginUser");
 		return "redirect:/";
-	}
-
-	@RequestMapping("/{userId}/form")
-	public String updateForm(@PathVariable String userId, Model model) throws Exception {
-		User user = userService.findByUserId(userId);
-		model.addAttribute("user", user);
-		return "user/form";
-	}
-
-	@RequestMapping(value = "/{userId}", method = RequestMethod.POST)
-	public String update(@PathVariable String userId, User user, Model model) throws Exception {
-		log.debug("user : {}", user);
-		try {
-			userService.update(userId, user);
-			return "redirect:/";
-		} catch (PasswordMismatchException e) {
-			model.addAttribute("user", user);
-			model.addAttribute("errorMessage", "비밀번호가 틀립니다. 비밀번호 확인해 주세요.");
-			return "user/form";
-		}
 	}
 }
