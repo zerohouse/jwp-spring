@@ -9,18 +9,22 @@ import next.dao.qna.QuestionDao;
 import next.model.qna.Answer;
 import next.model.qna.Question;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class QnaService {
 	@Resource(name = "questionDao")
 	private QuestionDao questionDao;
 	
 	@Resource(name = "answerDao")
 	private AnswerDao answerDao;
-
+	
+	private Question question;
+	
 	public Question findById(long questionId) {
-		Question question = questionDao.findById(questionId);
+		question = questionDao.findById(questionId);
 		List<Answer> answers = answerDao.findAllByQuestionId(questionId);
 		return question.withAnswers(answers);
 	}
@@ -34,7 +38,7 @@ public class QnaService {
 	}
 	
 	public void delete(final long questionId) throws ExistedAnotherUserException {
-		Question question = findById(questionId);
+		question = findById(questionId);
 		
 		if (!question.canDelete()) {
 			throw new ExistedAnotherUserException("다른 사용자가 추가한 댓글이 존재해 삭제할 수 없습니다.");

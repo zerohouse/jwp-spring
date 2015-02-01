@@ -27,6 +27,8 @@ public class UserService {
 	@Resource(name = "auditService")
 	private AuditService auditService;
 
+	private User existedUser;
+
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
@@ -34,7 +36,7 @@ public class UserService {
 	public User join(User user) throws ExistedUserException {
 		log.debug("User : {}", user);
 
-		User existedUser = userDao.findByUserId(user.getUserId());
+		existedUser = userDao.findByUserId(user.getUserId());
 		if (existedUser != null) {
 			throw new ExistedUserException(user.getUserId());
 		}
@@ -46,19 +48,20 @@ public class UserService {
 
 	public User login(String userId, String password) throws PasswordMismatchException {
 		auditService.log(new AuditObject(userId, LOGIN_TRY));
-		User user = userDao.findByUserId(userId);
-		if (user == null) {
+
+		existedUser = userDao.findByUserId(userId);
+		if (existedUser == null) {
 			auditService.log(new AuditObject(userId, LOGIN_FAILED));
 			throw new PasswordMismatchException();
 		}
 
-		if (!user.matchPassword(password)) {
+		if (!existedUser.matchPassword(password)) {
 			auditService.log(new AuditObject(userId, LOGIN_FAILED));
 			throw new PasswordMismatchException();
 		}
 
 		auditService.log(new AuditObject(userId, LOGIN_SUCCESS));
-		return user;
+		return existedUser;
 	}
 
 	public User findByUserId(String userId) {
@@ -66,12 +69,12 @@ public class UserService {
 	}
 
 	public void update(String userId, User updateUser) throws PasswordMismatchException {
-		User user = userDao.findByUserId(userId);
-		if (user == null) {
+		existedUser = userDao.findByUserId(userId);
+		if (existedUser == null) {
 			throw new NullPointerException(userId + " user doesn't existed.");
 		}
-		user.update(updateUser);
-		userDao.update(user);
-		auditService.log(new AuditObject(user.getUserId(), UPDATE));
+		existedUser.update(updateUser);
+		userDao.update(existedUser);
+		auditService.log(new AuditObject(existedUser.getUserId(), UPDATE));
 	}
 }
