@@ -14,12 +14,11 @@
 	
 	<context:property-placeholder location="classpath:/application-properties.xml" />
 
-	<context:annotation-config />
-
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		p:driverClassName="${database.driverClassName}" p:url="${database.url}"
-		p:username="${database.username}" p:password="${database.password}"
-		scope="singleton"
+		p:driverClassName="${database.driverClassName}" 
+		p:url="${database.url}"
+		p:username="${database.username}" 
+		p:password="${database.password}"
 	/>
 
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" 
