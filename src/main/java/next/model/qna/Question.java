@@ -2,8 +2,6 @@ package next.model.qna;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.validation.constraints.Size;
 
