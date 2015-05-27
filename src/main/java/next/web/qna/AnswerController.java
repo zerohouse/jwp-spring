@@ -56,6 +56,7 @@ public class AnswerController {
 	
 	private String getMessage(FieldError error) {
 		String key = error.getCode() + ".answer." + error.getField();
+		System.err.println(key);
 		return msa.getMessage(key);
 	}
 }
