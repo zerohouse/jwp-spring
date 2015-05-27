@@ -52,6 +52,7 @@ public class QnaService {
 		questionDao.delete(questionId);
 	}
 
+	
 	@Transactional
 	public void addAnswer(long questionId, Answer answer) {
 		answer.setQuestionId(questionId);
@@ -59,6 +60,7 @@ public class QnaService {
 		questionDao.increaseCommentCount(questionId);
 	}
 
+	
 	@Transactional
 	public void deleteAnswer(long questionId, long answerId) {
 		answerDao.delete(answerId);
