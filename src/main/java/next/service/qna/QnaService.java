@@ -17,12 +17,12 @@ import org.springframework.stereotype.Service;
 public class QnaService {
 	@Resource(name = "questionDao")
 	private QuestionDao questionDao;
-	
+
 	@Resource(name = "answerDao")
 	private AnswerDao answerDao;
-	
+
 	private Question question;
-	
+
 	public Question findById(long questionId) {
 		question = questionDao.findById(questionId);
 		List<Answer> answers = answerDao.findAllByQuestionId(questionId);
@@ -33,13 +33,17 @@ public class QnaService {
 		return questionDao.findAll();
 	}
 
-	public void save(Question question) {
+	public void saveIfExistModify(Question question) {
+		if (questionDao.findById(question.getQuestionId()) != null) {
+			questionDao.update(question);
+			return;
+		}
 		questionDao.insert(question);
 	}
-	
+
 	public void delete(final long questionId) throws ExistedAnotherUserException {
 		question = findById(questionId);
-		
+
 		if (!question.canDelete()) {
 			throw new ExistedAnotherUserException("다른 사용자가 추가한 댓글이 존재해 삭제할 수 없습니다.");
 		}
