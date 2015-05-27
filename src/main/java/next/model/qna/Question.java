@@ -2,6 +2,7 @@ package next.model.qna;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.constraints.Size;
@@ -99,16 +100,12 @@ public class Question {
 	public Question withAnswers(List<Answer> answers) {
 		return new Question(questionId, writer, title, contents, createdDate, countOfComment, answers);
 	}
-	
+
 	public boolean canDelete() {
 		if (answers == null || answers.isEmpty()) {
 			return true;
 		}
-		
-		List<Answer> anotherAnswers = answers.stream()
-				.filter(a -> a.isSameUser(writer))
-				.collect(Collectors.toList());
-		return anotherAnswers.isEmpty();
+		return !answers.stream().filter(a -> !a.isSameUser(writer)).findFirst().isPresent();
 	}
 
 	@Override

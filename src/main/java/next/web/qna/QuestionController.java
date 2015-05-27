@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import next.model.qna.Question;
+import next.service.qna.ExistedAnotherUserException;
 import next.service.qna.QnaService;
 
 import org.slf4j.Logger;
@@ -39,9 +40,16 @@ public class QuestionController {
 	}
 
 	@RequestMapping("/{id}/form")
-	public String modify(@PathVariable long id, Model model) {
+	public String update(@PathVariable long id, Model model) {
 		model.addAttribute("question", qnaService.findById(id));
 		return "qna/form";
+	}
+
+	@RequestMapping("/{id}/delete")
+	public String delete(@PathVariable long id, Model model) throws ExistedAnotherUserException {
+		qnaService.delete(id);
+		model.addAttribute("questions", qnaService.findAll());
+		return "qna/list";
 	}
 
 	@RequestMapping("/form")
